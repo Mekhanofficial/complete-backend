@@ -1,0 +1,84 @@
+openapi: 3.0.0
+info:
+  title: Node Vendor
+  description: Food item API documentation
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:5000/api/v1
+
+paths:
+  /item/all-items:
+    get:
+      tags:
+        - Items
+      summary: Retrieve all food items
+      description: Returns a list of food items from all restaurants.
+      responses:
+        '200':
+          description: Food items retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FoodItem'
+              examples:
+                sampleFoodItems:
+                  summary: Sample menu items
+                  value:
+                    - _id: "67cfab1291b1b7d9a4c10111"
+                      item_name: "Jollof Rice with Chicken"
+                      description: "Smoky jollof rice served with grilled chicken and fried plantain."
+                      price: 4500
+                      unit: "plate"
+                      restaurant: "67cfaa8791b1b7d9a4c10001"
+                      imageUrl: "imageCover-9a2b3c4d.jpg"
+                    - _id: "67cfab1291b1b7d9a4c10112"
+                      item_name: "Beef Shawarma"
+                      description: "Grilled beef shawarma with garlic sauce and vegetables."
+                      price: 3500
+                      unit: "wrap"
+                      restaurant: "67cfaa8791b1b7d9a4c10002"
+                      imageUrl: "imageCover-8b7c6d5e.jpg"
+                    - _id: "67cfab1291b1b7d9a4c10113"
+                      item_name: "Pepperoni Pizza"
+                      description: "Thin-crust pizza topped with pepperoni and mozzarella."
+                      price: 7000
+                      unit: "box"
+                      restaurant: "67cfaa8791b1b7d9a4c10003"
+                      imageUrl: "imageCover-7c6d5e4f.jpg"
+
+components:
+  schemas:
+    FoodItem:
+      type: object
+      required:
+        - _id
+        - item_name
+        - description
+        - price
+        - unit
+        - restaurant
+      properties:
+        _id:
+          type: string
+          example: "67cfab1291b1b7d9a4c10111"
+        item_name:
+          type: string
+          example: "Jollof Rice with Chicken"
+        description:
+          type: string
+          example: "Smoky jollof rice served with grilled chicken and fried plantain."
+        price:
+          type: number
+          example: 4500
+        unit:
+          type: string
+          example: "plate"
+        restaurant:
+          type: string
+          example: "67cfaa8791b1b7d9a4c10001"
+        imageUrl:
+          type: string
+          example: "imageCover-9a2b3c4d.jpg"

@@ -1,0 +1,32 @@
+STRINGS
+let username: string = "King kuta";
+let age: number = 4l
+let isAdmitted: boolean = false;
+let friends: string[] = {"John", "Doe", "Oghenekevwe"};
+let friendsAge: number[] = [16, 5 , 17]
+let data: any = "can be anything"
+
+INTERFACES
+
+interface User{
+    id: number;
+    username: string;
+    email: string;
+    isActive: boolean;
+    role?: string;
+}
+
+const newUser: User{
+    id:1,
+    username: "king kuta",
+    email: "kuta@gmail.com",
+    isActive: true
+}
+
+
+//function and typing
+const calculateVat = (price:number, vatRate:number): number => {
+    return price * vatRate;
+}
+
+calculateVat(100,0.1);

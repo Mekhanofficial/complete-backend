@@ -1,0 +1,80 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+'pending',
+          'preparing',
+          'ready for pickup',
+          'in transit',
+          'delivered',
+          'cancelled',
+
+            'pending',
+          'preparing',
+          'ready for pickup',
+          'in transit',
+          'delivered',
+          'cancelled',
+
+// --ENUMS--
+enum OrderStatus{
+  PENDING
+  PREPARING
+  READY_FOR_PICKUP
+  IN_TRANSIT
+  DELIVERED
+  CANCELLED 
+}
+
+// --MODELS--
+model Order {
+  orderId           String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  owner             User         @relation(fields: [ownerId], references: [id])
+  ownerId           String
+  orderedItems      OrderItem[]
+  deliveryStatus    OrderStatus   @default(PENDING)
+  totalPrice        Float
+  payment           String         @default("card")
+  deliveryAddress   String
+  deliveryPhone     String
+  estimatedDeliveryAt DateTime     @default(dbgenerated("(now() + interval '45 minutes')"))
+  isPaid            Boolean        @default(false)
+  paidAt            DateTime?
+  isDelivered       Boolean        @default(false)
+  deliveredAt       DateTime?
+  paymentReference  String?
+  paystackAccessCode String?
+  paymentStatus     String         @default("pending")
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt(now())
+  status            OrderStatus     @default(PENDING)
+
+  @@index(orderId)
+  @@index(ownerId)
+
+}
+
+
+
+model OrderItem {
+  id        String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  order     Order   @relation(fields: [orderId], references: [orderId])
+  orderId   String
+  itemName  String
+  quantity  Int
+  price     Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt(now())
+}
